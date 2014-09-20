@@ -1,4 +1,5 @@
-autoban
+Autoban
 =======
 
-An automated solver for sokoban puzzles to better understand informed search methods.
+An automated solver for sokoban puzzles to better understand
+informed search methods.

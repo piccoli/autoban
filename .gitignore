@@ -1,28 +1,28 @@
+research/
+tex/
+old/
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
 
-# Precompiled Headers
-*.gch
-*.pch
+## Precompiled Headers
+#*.gch
+#*.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+## Compiled Dynamic libraries
+#*.so
+#*.dylib
+#*.dll
 
-# Fortran module files
-*.mod
+## Compiled Static libraries
+#*.lai
+#*.la
+#*.a
+#*.lib
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+## Executables
+#*.exe
+#*.out
+#*.app
