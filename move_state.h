@@ -13,9 +13,9 @@ typedef MoveState* const   MoveState_;
 
 class MoveState: public State {
 public:
-    uint guy;
+    uint pusher;
 
-     MoveState(_uint   guy    = UINF ,
+     MoveState(_uint   pusher = UINF ,
                _State_ parent = NULL ,
                _uint   g      = 0U  );
 
@@ -27,7 +27,7 @@ public:
     State* get_neighbor(Board_ b, _uint k);
 
     uint        lower_bound( Board_ b , _State_ other);
-    void        set_guy    (_uint   p                );
+    void        set_pusher (_uint   p                );
     StateArray& neighbors  ( Board_ b                );
 
     void accept(StateVisitor& visitor);

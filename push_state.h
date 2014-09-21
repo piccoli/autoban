@@ -29,10 +29,10 @@ public:
 
     State* get_neighbor(Board_ b, _uint k);
 
-    _MoveState* guy_state  (void                    ) const;
-    uint        lower_bound( Board_ b, _State_ other)      ;
-    void        add_rock   (_uint   t               )      ;
-    StateArray& neighbors  ( Board_ b               )      ;
+    _MoveState* pusher_state(void                    ) const;
+    uint        lower_bound ( Board_ b, _State_ other)      ;
+    void        add_rock    (_uint   t               )      ;
+    StateArray& neighbors   ( Board_ b               )      ;
 
     void accept(StateVisitor& visitor);
 

@@ -88,7 +88,7 @@ void PushState::add_rock(_uint t) {
     rock_set.insert(t);
 }
 
-_MoveState* PushState::guy_state() const {
+_MoveState* PushState::pusher_state() const {
     assert(children.size());
 
 #ifdef NDEBUG
@@ -103,29 +103,29 @@ State* PushState::new_neighbor(Board_ b, _uint p, _int d) {
     _uint gp = static_cast<_uint>(static_cast<_int>(p) + d),
           np = static_cast<_uint>(static_cast<_int>(p) - d);
 
-    // Guy must be able to get to position gp and move the rock in p to np.
+    // Pusher must be able to get to position gp and move the rock in p to np.
     if(b->map[gp] != TILE_EMPTY || b->map[np] != TILE_EMPTY)
         return NULL;
 
-    // Check if current guy is already next to a rock.  In this case, we
+    // Check if current pusher is already next to a rock.  In this case, we
     // actually move the rock instead of constructing a path.
-    if(guy_state()->guy == gp) {
+    if(pusher_state()->pusher == gp) {
         PushState_ s = new PushState(this, g + 1U);
         // Copy rocks at their current location,
         // except for the rock at p, which goes to np instead.
         for EachTileIn(it, rocks)
             s->add_rock(*it == p ? np : *it);
-        // Create move state for guy from gp to p.
+        // Create move state for pusher from gp to p.
         s->children.push_back(new MoveState(p));
         return s;
     }
-    // Otherwise, the neighboring state is a path traveled by the guy
+    // Otherwise, the neighboring state is a path traveled by the pusher
     // until he is next to rock (i, j), at (gi, gj). So we compute this
     // path using a "sub-"A* pathfinder.
-    StateStack path = b->get_path(guy_state()->clone(),   // We begin at where we are right now.
+    StateStack path = b->get_path(pusher_state()->clone(),   // We begin at where we are right now.
                                   new MoveState(gp)); // And end at gp.
 
-    // Give up if there is no path from the current guy position to gp.
+    // Give up if there is no path from the current pusher position to gp.
     if(path.empty())
         return NULL;
 
@@ -178,9 +178,9 @@ bool PushState::operator==(_State& other) const {
 #else
     _PushState_ ms = dynamic_cast<_PushState_>(&other); assert(ms != NULL);
 #endif
-    if(*(guy_state()) != *(ms->guy_state()))
+    if(*(pusher_state()) != *(ms->pusher_state()))
         return false;
-    // TODO starting guy position?
+    // TODO starting pusher position?
     for EachTileIn(i, rocks)
         if(ms->rock_set.find(*i) == ms->rock_set.end())
             return false;
@@ -228,7 +228,7 @@ std::size_t PushStateHash::operator()(State_ key) const {
     _PushState_ ms = dynamic_cast<_PushState_>(key); assert(ms != NULL);
 #endif
     std::size_t hh = SEED;
-    _uchar* p = base189(ms->guy_state()->guy);
+    _uchar* p = base189(ms->pusher_state()->pusher);
     do hh = (hh * SHFT) + static_cast<uint>(*p); while(*++p);
 
     for EachTileIn(i, ms->rocks) {

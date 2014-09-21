@@ -74,7 +74,7 @@ uint HungarianSolver::min_weight_perfect_match() {
     uint cost = 0U;
     for Each(i)
         cost += static_cast<uint>(Cost(i, XMate(i)));
-    // XXX Costs were multiplied by 2 for avoiding loss of precision, as we made
+    // XXX Costs were multiplied by 2 for avoiding loss of precision, as we did
     // all the work with integers. So we divide by two back here.
     return cost >> 1U;
 }

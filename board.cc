@@ -30,14 +30,14 @@ Board::Board(std::istream& in): start(new PushState), goal(new PushState) {
         for(std::string::const_iterator jt = line.begin(); jt != line.end(); ++i, ++j, ++jt) {
             map[i] = TILE_EMPTY;
             switch(static_cast<uchar>(*jt)) {
-                case TILE_GUY  : ms   ->set_guy (i); break;
-                case TILE_ROCK : start->add_rock(i); break;
-                case TILE_SLOT : goal ->add_rock(i); break;
-                case TILE_RSLOT: start->add_rock(i);
-                                 goal ->add_rock(i); break;
-                case TILE_WALL : map[i] = TILE_WALL; break;
-                case TILE_EMPTY:
-                default        :                     break;
+                case TILE_PUSHER: ms   ->set_pusher(i); break;
+                case TILE_ROCK  : start->add_rock  (i); break;
+                case TILE_SLOT  : goal ->add_rock  (i); break;
+                case TILE_RSLOT : start->add_rock  (i);
+                                  goal ->add_rock  (i); break;
+                case TILE_WALL  : map[i] = TILE_WALL  ; break;
+                case TILE_EMPTY :
+                default         :                       break;
             }
         }
         // Complete missing spaces.
@@ -46,9 +46,9 @@ Board::Board(std::istream& in): start(new PushState), goal(new PushState) {
     }
     start->children.push_back(ms           );
     goal ->children.push_back(new MoveState);
-    // Missing a slot? Then guy must be over a slot.
+    // Missing a slot? Then the pusher must be over a slot.
     if(goal->rocks.size() < start->rocks.size())
-        goal->add_rock(ms->guy);
+        goal->add_rock(ms->pusher);
 }
 
 Board::~Board() {
@@ -162,9 +162,9 @@ OverlayApplyVisitor::OverlayApplyVisitor(_Board& b): b(b) {}
 OverlayApplyVisitor::~OverlayApplyVisitor() {}
 
 void OverlayApplyVisitor::visit(MoveState_ ms) {
-    _uint g = ms->guy;
+    _uint g = ms->pusher;
     if(g < UINF)
-        b.map[g] = TILE_GUY;
+        b.map[g] = TILE_PUSHER;
 }
 
 void OverlayApplyVisitor::visit(PushState_ ms) {
@@ -177,7 +177,7 @@ OverlayRemoveVisitor::OverlayRemoveVisitor(_Board& b): b(b) {}
 OverlayRemoveVisitor::~OverlayRemoveVisitor() {}
 
 void OverlayRemoveVisitor::visit(MoveState_ ms) {
-    _uint g = ms->guy;
+    _uint g = ms->pusher;
     if(g < UINF)
         b.map[g] = TILE_EMPTY;
 }

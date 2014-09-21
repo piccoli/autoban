@@ -5,21 +5,21 @@
 #include <tr1/unordered_set>
 #include <list>
 
-#define TILE_GUY   '@'
-#define TILE_ROCK  '$'
-#define TILE_SLOT  '.'
-#define TILE_RSLOT '*'
-#define TILE_WALL  '#'
-#define TILE_EMPTY ' '
+#define TILE_PUSHER '@'
+#define TILE_ROCK   '$'
+#define TILE_SLOT   '.'
+#define TILE_RSLOT  '*'
+#define TILE_WALL   '#'
+#define TILE_EMPTY  ' '
 
 /*
 enum {
-    TILE_GUY   = '@',
-    TILE_ROCK  = '$',
-    TILE_SLOT  = '.',
-    TILE_RSLOT = '*',
-    TILE_WALL  = '#',
-    TILE_EMPTY = ' '
+    TILE_PUSHER = '@',
+    TILE_ROCK   = '$',
+    TILE_SLOT   = '.',
+    TILE_RSLOT  = '*',
+    TILE_WALL   = '#',
+    TILE_EMPTY  = ' '
 };
 */
 
