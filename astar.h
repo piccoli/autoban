@@ -9,10 +9,10 @@ private:
     StateSet open  ,
              closed;
 public:
-    AStarSolver (Board_ b     , const bool verbose = false);
+    AStarSolver (Board_ b     , _bool verbose = false);
     AStarSolver (Board_ b     ,
                  State_ start ,
-                 State_ goal  , const bool verbose = false);
+                 State_ goal  , _bool verbose = false);
     ~AStarSolver(void        );
 
     StateStack solve(void);

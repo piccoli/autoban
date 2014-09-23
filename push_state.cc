@@ -38,11 +38,8 @@ uint PushState::lower_bound(Board_ b, _State_ other) {
     b->apply_overlay(this);
 
     // Check for deadlocks.
-#ifdef NDEBUG
-    _PushState_ ms = static_cast<_PushState_>(other);
-#else
-    _PushState_ ms = dynamic_cast<_PushState_>(other); assert(ms != NULL);
-#endif
+    _PushState_ ms = TYPECAST<_PushState_>(other);
+    assert(ms != NULL);
     _uint w = b->width ,
           h = b->height;
     for EachTileIn(it, rocks) {
@@ -90,12 +87,8 @@ void PushState::add_rock(_uint t) {
 
 _MoveState* PushState::pusher_state() const {
     assert(children.size());
-
-#ifdef NDEBUG
-    _MoveState* mme = static_cast<_MoveState*>(children.back());
-#else
-    _MoveState* mme = dynamic_cast<_MoveState*>(children.back()); assert(mme != NULL);
-#endif
+    _MoveState* mme = TYPECAST<_MoveState*>(children.back());
+    assert(mme != NULL);
     return mme;
 }
 
@@ -173,11 +166,8 @@ StateArray& PushState::neighbors(Board_ b) {
 bool PushState::operator==(_State& other) const {
     if(this == &other)
         return true;
-#ifdef NDEBUG
-    _PushState_ ms = static_cast<_PushState_>(&other);
-#else
-    _PushState_ ms = dynamic_cast<_PushState_>(&other); assert(ms != NULL);
-#endif
+    _PushState_ ms = TYPECAST<_PushState_>(&other);
+    assert(ms != NULL);
     if(*(pusher_state()) != *(ms->pusher_state()))
         return false;
     // TODO starting pusher position?
@@ -222,11 +212,8 @@ static inline _uchar* base189(uint x) {
 std::size_t PushStateHash::operator()(State_ key) const {
     if(key->hash > 0U) return key->hash;
 
-#ifdef NDEBUG
-    _PushState_ ms = static_cast<_PushState_>(key);
-#else
-    _PushState_ ms = dynamic_cast<_PushState_>(key); assert(ms != NULL);
-#endif
+    _PushState_ ms = TYPECAST<_PushState_>(key);
+    assert(ms != NULL);
     std::size_t hh = SEED;
     _uchar* p = base189(ms->pusher_state()->pusher);
     do hh = (hh * SHFT) + static_cast<uint>(*p); while(*++p);

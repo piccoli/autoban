@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     clear_screen();
 
     StateStack ss = solver.solve();
-    int status = ss.empty() ? EXIT_FAILURE : EXIT_SUCCESS;
+    _int status = ss.empty() ? EXIT_FAILURE : EXIT_SUCCESS;
     solver.animate_solution(ss);
 
     show_cursor();

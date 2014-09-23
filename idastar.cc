@@ -2,14 +2,14 @@
 #include "sokoban.h"
 #include "idastar.h"
 
-IDAStarSolver::IDAStarSolver(Board_ b, const bool verbose):
+IDAStarSolver::IDAStarSolver(Board_ b, _bool verbose):
     Solver(b, verbose),
     ss(NULL) {}
 
 IDAStarSolver::IDAStarSolver(Board_ b    ,
                              State_ start,
                              State_ goal ,
-                             const bool verbose):
+                             _bool verbose):
     Solver(b, start, goal, verbose),
     ss(NULL) {}
 

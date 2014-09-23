@@ -27,11 +27,8 @@ void MoveState::accept(StateVisitor& visitor) {
 uint MoveState::lower_bound(Board_ b, _State_ other) {
     if(*this == *other)
         return 0U;
-#ifdef NDEBUG
-    _MoveState_ ms = static_cast<_MoveState_>(other);
-#else
-    _MoveState_ ms = dynamic_cast<_MoveState_>(other); assert(ms != NULL);
-#endif
+    _MoveState_ ms = TYPECAST<_MoveState_>(other);
+    assert(ms != NULL);
     return b->tile_distance(pusher, ms->pusher);
 }
 
@@ -72,20 +69,14 @@ State* MoveState::get_neighbor(Board_ b, _uint k) {
 bool MoveState::operator==(_State& other) const {
     if(this == &other)
         return true;
-#ifdef NDEBUG
-    _MoveState_ ms = static_cast<_MoveState_>(&other);
-#else
-    _MoveState_ ms = dynamic_cast<_MoveState_>(&other); assert(ms != NULL);
-#endif
+    _MoveState_ ms = TYPECAST<_MoveState_>(&other);
+    assert(ms != NULL);
     return !(pusher < UINF && ms->pusher < UINF && pusher != ms->pusher);
 }
 
 std::size_t MoveStateHash::operator()(State_ key) const {
     if(key->hash > 0U) return key->hash;
-#ifdef NDEBUG
-    _MoveState_ ms = static_cast<_MoveState_>(key);
-#else
-    _MoveState_ ms = dynamic_cast<_MoveState_>(key); assert(ms != NULL);
-#endif
+    _MoveState_ ms = TYPECAST<_MoveState_>(key);
+    assert(ms != NULL);
     return key->hash = 1U + ms->pusher;
 }

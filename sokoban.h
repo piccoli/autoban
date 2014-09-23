@@ -3,6 +3,12 @@
 
 #define UINF 0x3FFFFFFFU
 
+#ifdef NDEBUG
+#define TYPECAST static_cast
+#else
+#define TYPECAST dynamic_cast
+#endif
+
 typedef unsigned int  uint ;
 typedef unsigned char uchar;
 

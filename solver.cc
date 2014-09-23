@@ -2,7 +2,7 @@
 #include <iostream>
 #include "solver.h"
 
-Solver::Solver(Board_ b, const bool verbose):
+Solver::Solver(Board_ b, _bool verbose):
     board  (b       ),
     start  (b->start),
     goal   (b->goal ),
@@ -11,7 +11,7 @@ Solver::Solver(Board_ b, const bool verbose):
 Solver::Solver(Board_ b    ,
                State_ start,
                State_ goal ,
-               const bool verbose):
+               _bool verbose):
     board  (b      ),
     start  (start  ),
     goal   (goal   ),

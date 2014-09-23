@@ -9,12 +9,12 @@ protected:
     Board_ board  ;
     State_ start  ,
            goal   ;
-    const bool verbose;
+    _bool  verbose;
 public:
-    Solver(Board_ b    , const bool verbose = false);
+    Solver(Board_ b    , _bool verbose = false);
     Solver(Board_ b    ,
            State_ start,
-           State_ goal , const bool verbose = false);
+           State_ goal , _bool verbose = false);
 
     virtual ~Solver(void);
 

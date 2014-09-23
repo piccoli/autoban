@@ -10,10 +10,10 @@ private:
 
     uint search(State_ s, _uint bound);
 public:
-    IDAStarSolver(Board_ b    , const bool verbose = false);
+    IDAStarSolver(Board_ b    , _bool verbose = false);
     IDAStarSolver(Board_ b    ,
                   State_ start,
-                  State_ goal , const bool verbose = false);
+                  State_ goal , _bool verbose = false);
     ~IDAStarSolver(void);
 
     StateStack solve(void);

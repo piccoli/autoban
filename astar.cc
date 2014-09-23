@@ -4,14 +4,14 @@
 #include "astar.h"
 
 template<typename StateSet>
-AStarSolver<StateSet>::AStarSolver(Board_ b, const bool verbose):
+AStarSolver<StateSet>::AStarSolver(Board_ b, _bool verbose):
     Solver(b, verbose) {}
 
 template<typename StateSet>
 AStarSolver<StateSet>::AStarSolver(Board_ b    ,
                                    State_ start,
                                    State_ goal ,
-                                   const bool verbose):
+                                   _bool verbose):
     Solver(b, start, goal, verbose) {}
 
 template<typename StateSet>
@@ -53,23 +53,21 @@ StateStack AStarSolver<StateSet>::solve() {
             if(closed.find(nb) != closed.end()) {
                 delete nb;
                 *it = NULL;
+                continue;
             }
-            else {
-                const typename StateSet::const_iterator oi = open.find(nb);
-                if(oi != open.end()) {
-                    State_ onb = *oi;
-                    if(nb->g < onb->g) {
-                        onb->update_with(nb);
-                        q.decrease_key(onb);
-                    }
-                    delete nb;
-                    *it = NULL;
+            const typename StateSet::const_iterator oi = open.find(nb);
+            if(oi != open.end()) {
+                State_ onb = *oi;
+                if(nb->g < onb->g) {
+                    onb->update_with(nb);
+                    q.decrease_key(onb);
                 }
-                else {
-                    open.insert(nb);
-                    q.insert(nb, nb->lower_bound(board, goal));
-                }
+                delete nb;
+                *it = NULL;
+                continue;
             }
+            open.insert(nb);
+            q.insert(nb, nb->lower_bound(board, goal));
         }
     }
     return StateStack();

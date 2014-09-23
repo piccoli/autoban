@@ -9,10 +9,10 @@ private:
     StateSet open  ,
              closed;
 public:
-    SMAStarSolver (Board_ b     , const bool verbose = false);
+    SMAStarSolver (Board_ b     , _bool verbose = false);
     SMAStarSolver (Board_ b     ,
                    State_ start ,
-                   State_ goal  , const bool verbose = false);
+                   State_ goal  , _bool verbose = false);
     ~SMAStarSolver(void        );
 
     StateStack solve(void);
