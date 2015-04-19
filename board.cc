@@ -29,15 +29,24 @@ Board::Board(std::istream& in): start(new PushState), goal(new PushState) {
         uint j = 0U;
         for(std::string::const_iterator jt = line.begin(); jt != line.end(); ++i, ++j, ++jt) {
             map[i] = TILE_EMPTY;
-            switch(static_cast<uchar>(*jt)) {
+            uchar c = static_cast<uchar>(*jt);
+            switch(c) {
                 case TILE_PUSHER: ms   ->set_pusher(i); break;
                 case TILE_ROCK  : start->add_rock  (i); break;
                 case TILE_SLOT  : goal ->add_rock  (i); break;
                 case TILE_RSLOT : start->add_rock  (i);
                                   goal ->add_rock  (i); break;
                 case TILE_WALL  : map[i] = TILE_WALL  ; break;
-                case TILE_EMPTY :
-                default         :                       break;
+                case TILE_EMPTY : break;
+                case TILE_PUSHER_AND_SLOT:
+                                  ms->set_pusher(i);
+                                  goal ->add_rock  (i);
+                                  break;
+                default         : {
+                                      std::cerr << "Unrecognised character '" << c << "' in input. Aborting." << std::endl;
+                                      exit(-1);
+                                  }
+                                      break;
             }
         }
         // Complete missing spaces.

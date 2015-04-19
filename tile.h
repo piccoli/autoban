@@ -11,6 +11,7 @@
 #define TILE_RSLOT  '*'
 #define TILE_WALL   '#'
 #define TILE_EMPTY  ' '
+#define TILE_PUSHER_AND_SLOT  '+'
 
 /*
 enum {
